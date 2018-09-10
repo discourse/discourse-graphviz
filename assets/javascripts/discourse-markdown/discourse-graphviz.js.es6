@@ -14,19 +14,21 @@ export function setup(helper) {
       tag: "graphviz",
 
       replace: function(state, tagInfo, content) {
-        // version 2.0.0
+        const token = state.push("html_raw", "", 0);
+        // token.content = `<div class="graphviz">\n${content}\n</div>\n`;
+
+        // version 1.8.2
+        const result = Viz(content.replace(/[\r\n\t]/g, ""), {
+          format: "svg",
+          engine: "dot"
+        });
+        token.content = `<div class="graphviz">\n${result}\n</div>\n`;
+
+        // version 2.0.0 - not using it anymore
         // const workerURL =
         //   "/plugins/discourse-graphviz/javascripts/lite.render.js";
         // let viz = new Viz({ workerURL });
 
-        const token = state.push("html_raw", "", 0);
-        token.content = `<div class="graphviz">\n${content}\n</div>\n`;
-
-        // version 1.8.2
-        // const result = Viz(content, { engine: "dot" });
-        // token.content = `<div class="graphviz">\n${result}\n</div>\n`;
-
-        // version 2.0.0
         // viz.renderSVGElement(content).then(function(element) {
         //   document
         //     .getElementById("reply-control")

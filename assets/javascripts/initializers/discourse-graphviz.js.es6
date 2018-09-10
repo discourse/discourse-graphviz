@@ -7,7 +7,7 @@ export default {
   initialize(container) {
     withPluginApi("0.8.22", api => {
       api.decorateCooked($elem => {
-        // loadScript("/plugins/discourse-graphviz/javascripts/viz.js");
+        // loadScript("/plugins/discourse-graphviz/javascripts/viz-1.8.2.js");
       });
     });
   }

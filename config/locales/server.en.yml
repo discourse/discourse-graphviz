@@ -1,0 +1,3 @@
+en:
+  site_settings:
+    discourse_graphviz_enabled: "Enable the Graphviz plugin"

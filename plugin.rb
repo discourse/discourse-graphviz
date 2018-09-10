@@ -4,7 +4,7 @@
 # authors: Discourse
 # url: https://github.com/
 
-hide_plugin if self.respond_to?(:hide_plugin)
+enabled_site_setting :discourse_graphviz_enabled
 
 register_asset "javascripts/lib/viz-1.8.2.js"
 
