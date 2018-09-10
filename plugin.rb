@@ -7,6 +7,7 @@
 enabled_site_setting :discourse_graphviz_enabled
 
 register_asset "javascripts/lib/viz-1.8.2.js"
+register_asset "stylesheets/common/graphviz.scss"
 
 after_initialize do
 

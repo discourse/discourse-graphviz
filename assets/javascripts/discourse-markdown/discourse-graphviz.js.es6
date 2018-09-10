@@ -7,7 +7,7 @@ export function setup(helper) {
     opts.features.graphviz = siteSettings.discourse_graphviz_enabled;
   });
 
-  helper.whiteList(["div.graphviz"]);
+  helper.whiteList(["div.graphviz", "div.graphviz.is-loading"]);
 
   helper.registerPlugin(md => {
     md.inline.bbcode.ruler.push("graphviz", {
@@ -15,28 +15,10 @@ export function setup(helper) {
 
       replace: function(state, tagInfo, content) {
         const token = state.push("html_raw", "", 0);
-        // token.content = `<div class="graphviz">\n${content}\n</div>\n`;
-
-        // version 1.8.2
-        const result = Viz(content.replace(/[\r\n\t]/g, ""), {
-          format: "svg",
-          engine: "dot"
-        });
-        token.content = `<div class="graphviz">\n${result}\n</div>\n`;
-
-        // version 2.0.0 - not using it anymore
-        // const workerURL =
-        //   "/plugins/discourse-graphviz/javascripts/lite.render.js";
-        // let viz = new Viz({ workerURL });
-
-        // viz.renderSVGElement(content).then(function(element) {
-        //   document
-        //     .getElementById("reply-control")
-        //     .getElementsByClassName("graphviz")[0]
-        //     .appendChild(element);
-        //   token.content = `<div class="graphviz">\n${element}\n</div>\n`;
-        // });
-
+        const escaped = state.md.utils.escapeHtml(
+          content.replace(/[\r\n\t]/g, "")
+        );
+        token.content = `<div class="graphviz is-loading">\n${escaped}\n</div>\n`;
         return true;
       }
     });
