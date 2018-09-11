@@ -13,25 +13,6 @@ after_initialize do
 
   DiscourseEvent.on(:before_post_process_cooked) do |doc, post|
 
-    # this is using vizgraph cli
-    # doc.css('div.graphviz').each do |graph|
-    #   tmp_dot = Tempfile.new(["dotfile", ".dot"])
-    #   tmp_png = Tempfile.new(["pngfile", ".png"])
-    #
-    #   tmp_dot.write(graph.children[0].text)
-    #   tmp_dot.rewind
-    #
-    #   Discourse::Utils.execute_command('dot', '-Tpng', tmp_dot.path, '-o', tmp_png.path)
-    #
-    #   upload = UploadCreator.new(tmp_png, File.basename(tmp_png.path)).create_for(-1)
-    #
-    #   new_node = Nokogiri::XML::Node.new("img", doc)
-    #   new_node['src'] = upload.url
-    #
-    #   graph.replace new_node
-    # end
-
-    # this is using viz 1.8.2 api
     context = MiniRacer::Context.new
     context.load("#{Rails.root}/plugins/discourse-graphviz/assets/javascripts/lib/viz-1.8.2.js")
 

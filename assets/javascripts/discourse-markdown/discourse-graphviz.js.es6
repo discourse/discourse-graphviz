@@ -18,7 +18,8 @@ export function setup(helper) {
         const escaped = state.md.utils.escapeHtml(
           content.replace(/[\r\n\t]/g, "")
         );
-        token.content = `<div class="graphviz is-loading">\n${escaped}\n</div>\n`;
+        const engine = tagInfo.attrs.engine;
+        token.content = `<div class="graphviz is-loading" data-engine=${engine}>\n${escaped}\n</div>\n`;
         return true;
       }
     });

@@ -8,8 +8,17 @@ export default {
     withPluginApi("0.8.22", api => {
       api.decorateCooked($elem => {
         const $graphviz = $elem.find(".graphviz");
-        if ($graphviz.length) {
+        const engines = ["dot", "neato", "circo", "fdp", "osage", "twopi"];
+
+        if (
+          $graphviz.length &&
+          Discourse.SiteSettings.discourse_graphviz_enabled
+        ) {
           const graphDefinition = $graphviz.text();
+          const engine = engines.includes($graphviz.data("engine"))
+            ? $graphviz.data("engine")
+            : "dot";
+
           const $spinner = $("<div class='spinner'></div>");
           $graphviz.empty().append($spinner);
 
@@ -18,7 +27,7 @@ export default {
           ).then(() => {
             const svgChart = Viz(graphDefinition, {
               format: "svg",
-              engine: "dot"
+              engine: engine
             });
 
             $spinner.remove();
