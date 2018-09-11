@@ -14,25 +14,31 @@ export default {
           $graphviz.length &&
           Discourse.SiteSettings.discourse_graphviz_enabled
         ) {
-          const graphDefinition = $graphviz.text();
-          const engine = engines.includes($graphviz.data("engine"))
-            ? $graphviz.data("engine")
-            : "dot";
+          $graphviz.each(function(index) {
+            const graphDefinition = $(this).text();
+            const engine = engines.includes($(this).data("engine"))
+              ? $(this).data("engine")
+              : "dot";
 
-          const $spinner = $("<div class='spinner'></div>");
-          $graphviz.empty().append($spinner);
+            const $spinner = $("<div class='spinner'></div>");
+            $(this)
+              .empty()
+              .append($spinner);
 
-          loadScript(
-            "/plugins/discourse-graphviz/javascripts/viz-1.8.2.js"
-          ).then(() => {
-            const svgChart = Viz(graphDefinition, {
-              format: "svg",
-              engine: engine
+            loadScript(
+              "/plugins/discourse-graphviz/javascripts/viz-1.8.2.js"
+            ).then(() => {
+              const svgChart = Viz(graphDefinition, {
+                format: "svg",
+                engine: engine
+              });
+
+              $spinner.remove();
+
+              $(this)
+                .removeClass("is-loading")
+                .html(svgChart);
             });
-
-            $spinner.remove();
-
-            $graphviz.removeClass("is-loading").html(svgChart);
           });
         }
       });

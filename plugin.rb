@@ -17,7 +17,8 @@ after_initialize do
     context.load("#{Rails.root}/plugins/discourse-graphviz/assets/javascripts/lib/viz-1.8.2.js")
 
     doc.css('div.graphviz').each do |graph|
-      svg_graph = context.eval("Viz('#{graph.children[0].content.gsub(/[\r\n\t]/, "")}')")
+      engine = graph.attribute('data-engine').value.present? ? graph.attribute('data-engine').value : "dot"
+      svg_graph = context.eval("Viz('#{graph.children[0].content.gsub(/[\r\n\t]/, "")}', {engine: '#{engine}'})")
 
       tmp_svg = Tempfile.new(["svgfile", ".svg"])
       tmp_png = Tempfile.new(["pngfile", ".png"])
