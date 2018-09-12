@@ -8,7 +8,6 @@ export default {
     withPluginApi("0.8.22", api => {
       api.decorateCooked($elem => {
         const $graphviz = $elem.find(".graphviz");
-        const engines = ["dot", "neato", "circo", "fdp", "osage", "twopi"];
 
         if (
           $graphviz.length &&
@@ -16,10 +15,7 @@ export default {
         ) {
           $graphviz.each(function(index) {
             const graphDefinition = $(this).text();
-            const engine = engines.includes($(this).data("engine"))
-              ? $(this).data("engine")
-              : "dot";
-
+            const engine = $(this).data("engine");
             const $spinner = $("<div class='spinner'></div>");
             $(this)
               .empty()
@@ -28,16 +24,21 @@ export default {
             loadScript(
               "/plugins/discourse-graphviz/javascripts/viz-1.8.2.js"
             ).then(() => {
-              const svgChart = Viz(graphDefinition, {
-                format: "svg",
-                engine: engine
-              });
+              try {
+                const svgChart = Viz(graphDefinition, {
+                  format: "svg",
+                  engine: engine
+                });
 
-              $spinner.remove();
+                $spinner.remove();
 
-              $(this)
-                .removeClass("is-loading")
-                .html(svgChart);
+                $(this)
+                  .removeClass("is-loading")
+                  .html(svgChart);
+              } catch (e) {
+                // don't throw error if Viz syntax is wrong as user is typing
+                // console.log(e);
+              }
             });
           });
         }
