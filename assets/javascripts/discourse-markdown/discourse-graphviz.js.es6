@@ -15,14 +15,13 @@ export function setup(helper) {
 
       replace: function(state, tagInfo, content) {
         const engines = ["dot", "neato", "circo", "fdp", "osage", "twopi"];
-
         const token = state.push("html_raw", "", 0);
         const escaped = state.md.utils.escapeHtml(
           content.replace(/[\r\n\t]/g, "")
         );
-        const bbEngine = tagInfo.attrs.engine;
-        const engine = engines.includes(bbEngine)
-          ? `data-engine='${bbEngine}'`
+        const inputEngine = state.md.utils.escapeHtml(tagInfo.attrs.engine);
+        const engine = engines.includes(inputEngine)
+          ? `data-engine='${inputEngine}'`
           : "data-engine='dot'";
 
         token.content = `<div class="graphviz is-loading" ${engine}>\n${escaped}\n</div>\n`;
