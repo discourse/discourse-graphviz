@@ -11,30 +11,36 @@ register_asset "stylesheets/common/graphviz.scss"
 after_initialize do
 
   DiscourseEvent.on(:before_post_process_cooked) do |doc, post|
-    context = MiniRacer::Context.new
-    context.load("#{Rails.root}/plugins/discourse-graphviz/public/javascripts/viz-1.8.2.js")
+    if SiteSetting.discourse_graphviz_enabled
+      context = MiniRacer::Context.new
+      context.load("#{Rails.root}/plugins/discourse-graphviz/public/javascripts/viz-1.8.2.js")
 
-    doc.css('div.graphviz').each do |graph|
-      engine = graph.attribute('data-engine').value
-      svg_graph = context.eval("Viz('#{graph.children[0].content.gsub(/[\r\n\t]/, "")}', {engine: '#{engine}'})")
+      doc.css('div.graphviz').each do |graph|
+        engine = graph.attribute('data-engine').value
+        svg_graph = context.eval("Viz('#{graph.children[0].content.gsub(/[\r\n\t]/, "")}', {engine: '#{engine}'})")
 
-      tmp_svg = Tempfile.new(["svgfile", ".svg"])
-      tmp_png = Tempfile.new(["vizgraph", ".png"])
+        graph_title = Nokogiri.parse(svg_graph).at("//comment()[contains(.,'Title')]").content.match(/Title:\s(?<title>.+)\sPages:/)[:title]
+        filename = graph_title != "%0" ? graph_title : File.basename(tmp_png.path)
 
-      tmp_svg.write(svg_graph)
-      tmp_svg.rewind
+        tmp_svg = Tempfile.new(["svgfile", ".svg"])
+        tmp_png = Tempfile.new(["vizgraph-", ".png"])
 
-      Discourse::Utils.execute_command('convert', tmp_svg.path, tmp_png.path)
+        tmp_svg.write(svg_graph)
+        tmp_svg.rewind
 
-      upload = UploadCreator.new(tmp_png, File.basename(tmp_png.path)).create_for(-1)
+        Discourse::Utils.execute_command('convert', tmp_svg.path, tmp_png.path)
 
-      # replace div.gaphviz with image node
-      new_graph_node = Nokogiri::XML::Node.new("img", doc)
-      new_graph_node['src'] = upload.url
-      graph.replace new_graph_node
+        upload = UploadCreator.new(tmp_png, filename).create_for(-1)
 
-      tmp_svg.close!
-      tmp_png.close!
+        # replace div.gaphviz with image node
+        new_graph_node = Nokogiri::XML::Node.new("img", doc)
+        new_graph_node['src'] = upload.url
+        new_graph_node['alt'] = filename
+        graph.replace new_graph_node
+
+        tmp_svg.close!
+        tmp_png.close!
+      end
     end
   end
 end
