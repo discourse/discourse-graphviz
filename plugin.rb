@@ -24,7 +24,7 @@ after_initialize do
       tmp_svg.write(svg_graph)
       tmp_svg.rewind
 
-      Discourse::Utils.execute_command('convert', '-density', '128', tmp_svg.path, tmp_png.path)
+      Discourse::Utils.execute_command('convert', tmp_svg.path, tmp_png.path)
 
       upload = UploadCreator.new(tmp_png, File.basename(tmp_png.path)).create_for(-1)
 
