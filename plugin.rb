@@ -19,14 +19,14 @@ after_initialize do
         engine = graph.attribute('data-engine').value
         svg_graph = context.eval("Viz('#{graph.children[0].content.gsub(/[\r\n\t]/, "")}', {engine: '#{engine}'})")
 
-        graph_title = Nokogiri.parse(svg_graph).at("//comment()[contains(.,'Title')]").content.match(/Title:\s(?<title>.+)\sPages:/)[:title]
-        filename = graph_title != "%0" ? graph_title : File.basename(tmp_png.path)
-
         tmp_svg = Tempfile.new(["svgfile", ".svg"])
         tmp_png = Tempfile.new(["vizgraph-", ".png"])
 
         tmp_svg.write(svg_graph)
         tmp_svg.rewind
+
+        graph_title = Nokogiri.parse(svg_graph).at("//comment()[contains(.,'Title')]").content.match(/Title:\s(?<title>.+)\sPages:/)[:title]
+        filename = graph_title != "%0" ? graph_title : File.basename(tmp_png.path)
 
         Discourse::Utils.execute_command('convert', tmp_svg.path, tmp_png.path)
 
