@@ -1,4 +1,14 @@
-div.graphviz.is-loading {
-  background: $primary-very-low;
-  padding: 2em;
+div.graphviz {
+  &.is-loading {
+    padding: 2em;
+    background: $primary-very-low;
+  }
+
+  .graph-error {
+    padding: 2em;
+    background-color: $danger-low;
+    margin: 0;
+    color: $danger;
+    text-align: center;
+  }
 }
