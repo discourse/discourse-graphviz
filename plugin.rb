@@ -2,7 +2,7 @@
 # about: Graphviz
 # version: 0.0.1
 # authors: Maja Komel, Joffrey Jaffeux
-# url: https://github.com/
+# url: https://github.com/discourse/discourse-graphviz
 
 enabled_site_setting :discourse_graphviz_enabled
 
