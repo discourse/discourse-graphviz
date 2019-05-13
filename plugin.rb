@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # name: discourse-graphviz
 # about: Graphviz
 # version: 0.0.1
