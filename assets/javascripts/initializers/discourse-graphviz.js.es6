@@ -17,6 +17,7 @@ export default {
         $container.removeClass("is-loading");
 
         try {
+          /* global Viz */
           const svgChart = Viz(graphDefinition, {
             format: "svg",
             engine
@@ -33,7 +34,7 @@ export default {
     );
   },
 
-  initialize(container) {
+  initialize() {
     withPluginApi("0.8.22", api => {
       api.decorateCooked($elem => {
         const $graphviz = $elem.find(".graphviz");
