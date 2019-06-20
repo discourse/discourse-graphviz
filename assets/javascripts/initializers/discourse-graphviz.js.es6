@@ -36,24 +36,27 @@ export default {
 
   initialize() {
     withPluginApi("0.8.22", api => {
-      api.decorateCooked($elem => {
-        const $graphviz = $elem.find(".graphviz");
+      api.decorateCooked(
+        $elem => {
+          const $graphviz = $elem.find(".graphviz");
 
-        if (
-          $graphviz.length &&
-          Discourse.SiteSettings.discourse_graphviz_enabled
-        ) {
-          $graphviz.each((_, nodeContainer) => {
-            const $container = $(nodeContainer);
+          if (
+            $graphviz.length &&
+            Discourse.SiteSettings.discourse_graphviz_enabled
+          ) {
+            $graphviz.each((_, nodeContainer) => {
+              const $container = $(nodeContainer);
 
-            // if the container content has not yet been replaced
-            // do nothing
-            if (!$container.find("svg").length) {
-              run.debounce(this, this.renderGraph, $container, 200);
-            }
-          });
-        }
-      });
+              // if the container content has not yet been replaced
+              // do nothing
+              if (!$container.find("svg").length) {
+                run.debounce(this, this.renderGraph, $container, 200);
+              }
+            });
+          }
+        },
+        { id: "graphviz" }
+      );
     });
   }
 };
