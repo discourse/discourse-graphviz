@@ -11,10 +11,10 @@ export function setup(helper) {
 
   helper.registerPlugin(md => {
     if (md.options.discourse.features.graphviz) {
-      md.inline.bbcode.ruler.push("graphviz", {
+      md.block.bbcode.ruler.push("graphviz", {
         tag: "graphviz",
 
-        replace: function(state, tagInfo, content) {
+        replace(state, tagInfo, content) {
           const engines = ["dot", "neato", "circo", "fdp", "osage", "twopi"];
           const token = state.push("html_raw", "", 0);
 
