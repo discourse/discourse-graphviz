@@ -5,6 +5,18 @@ const { run } = Ember;
 export default {
   name: "discourse-graphviz",
 
+  renderGraphs($containers) {
+    $containers.each((_, container) => {
+      const $container = $(container);
+
+      // if the container content has not yet been replaced
+      // do nothing
+      if (!$container.find("svg").length) {
+        this.renderGraph($container);
+      }
+    });
+  },
+
   renderGraph($container) {
     const graphDefinition = $container.text();
     const engine = $container.attr("data-engine");
@@ -44,15 +56,7 @@ export default {
 
           const $graphviz = $elem.find(".graphviz");
           if ($graphviz.length) {
-            $graphviz.each((_, nodeContainer) => {
-              const $container = $(nodeContainer);
-
-              // if the container content has not yet been replaced
-              // do nothing
-              if (!$container.find("svg").length) {
-                run.debounce(this, this.renderGraph, $container, 200);
-              }
-            });
+            run.debounce(this, this.renderGraphs, $graphviz, 200);
           }
         },
         { id: "graphviz" }
