@@ -17,6 +17,10 @@ export function setup(helper) {
         replace: function(state, tagInfo, content) {
           const engines = ["dot", "neato", "circo", "fdp", "osage", "twopi"];
           const token = state.push("html_raw", "", 0);
+
+          // remove comments
+          content = content.replace(/^\s*?\/\/.*$/m, "");
+
           const escaped = state.md.utils.escapeHtml(
             content.replace(/[\r\n\t]/g, "")
           );
