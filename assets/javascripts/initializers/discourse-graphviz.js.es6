@@ -38,12 +38,12 @@ export default {
     withPluginApi("0.8.22", api => {
       api.decorateCooked(
         $elem => {
-          const $graphviz = $elem.find(".graphviz");
+          if (!Discourse.SiteSettings.discourse_graphviz_enabled) {
+            return;
+          }
 
-          if (
-            $graphviz.length &&
-            Discourse.SiteSettings.discourse_graphviz_enabled
-          ) {
+          const $graphviz = $elem.find(".graphviz");
+          if ($graphviz.length) {
             $graphviz.each((_, nodeContainer) => {
               const $container = $(nodeContainer);
 
