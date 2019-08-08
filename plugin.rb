@@ -18,12 +18,24 @@ after_initialize do
     context
   end
 
+  def svg_whitelist_xpath
+    @@svg_whitelist_xpath ||= "//*[#{UploadCreator::WHITELISTED_SVG_ELEMENTS.map { |e| "name()!='#{e}'" }.join(" and ") }]"
+  end
+
   DiscourseEvent.on(:before_post_process_cooked) do |doc, post|
     if SiteSetting.discourse_graphviz_enabled
 
-      doc.css('div.graphviz:not(.graphviz-svg)').each do |graph|
+      doc.css('div.graphviz').each do |graph|
         engine = graph.attribute('data-engine').value
-        svg_graph = context.eval("Viz('#{graph.children[0].content.gsub(/[\r\n\t]/, "")}', {engine: '#{engine}'})")
+        svg_graph = context.eval("Viz(#{graph.children[0].content.inspect}, {engine: '#{engine}'})")
+
+        if graph.classes.include?("graphviz-svg")
+          new_graph_node = Nokogiri::HTML.fragment(svg_graph).css("svg").first
+          new_graph_node['class'] = "graphviz-svg-render"
+          new_graph_node.xpath(svg_whitelist_xpath).remove
+          graph.replace new_graph_node
+          next
+        end
 
         tmp_svg = Tempfile.new(["svgfile", ".svg"])
         tmp_png = Tempfile.new(["vizgraph-", ".png"])
