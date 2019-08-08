@@ -3,7 +3,11 @@ export function setup(helper) {
     return;
   }
 
-  helper.whiteList(["div.graphviz", "div.graphviz.is-loading"]);
+  helper.whiteList([
+    "div.graphviz",
+    "div.graphviz.is-loading",
+    "div.graphviz-svg"
+  ]);
 
   helper.registerOptions((opts, siteSettings) => {
     opts.features.graphviz = siteSettings.discourse_graphviz_enabled;
@@ -29,7 +33,12 @@ export function setup(helper) {
             ? `data-engine='${inputEngine}'`
             : "data-engine='dot'";
 
-          token.content = `<div class="graphviz is-loading" ${engine}>\n${escaped}\n</div>\n`;
+          let svgOnly = "";
+          if (tagInfo.attrs.svg === "true") {
+            svgOnly = " graphviz-svg";
+          }
+
+          token.content = `<div class="graphviz is-loading${svgOnly}" ${engine}>\n${escaped}\n</div>\n`;
 
           return true;
         }

@@ -1,4 +1,7 @@
 div.graphviz {
+  svg {
+    max-width: 100%;
+  }
   &.is-loading {
     padding: 2em;
     background: $primary-very-low;
