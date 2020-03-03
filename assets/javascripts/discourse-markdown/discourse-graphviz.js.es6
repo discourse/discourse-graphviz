@@ -36,6 +36,8 @@ export function setup(helper) {
           let svgOnly = "";
           if (tagInfo.attrs.svg === "true") {
             svgOnly = " graphviz-svg";
+          } else if (tagInfo.attrs.svg === "false") {
+            svgOnly = " graphviz-no-svg";
           }
 
           token.content = `<div class="graphviz is-loading${svgOnly}" ${engine}>\n${escaped}\n</div>\n`;

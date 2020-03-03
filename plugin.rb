@@ -29,7 +29,11 @@ after_initialize do
         engine = graph.attribute('data-engine').value
         svg_graph = context.eval("Viz(#{graph.children[0].content.inspect}, {engine: '#{engine}'})")
 
-        if graph.classes.include?("graphviz-svg")
+        should_use_svg = SiteSetting.graphviz_default_svg
+        should_use_svg ||= graph.classes.include?("graphviz-svg")
+        should_use_svg &&= !graph.classes.include?("graphviz-no-svg")
+
+        if should_use_svg
           new_graph_node = Nokogiri::HTML.fragment(svg_graph).css("svg").first
           new_graph_node['class'] = "graphviz-svg-render"
           new_graph_node.xpath(svg_whitelist_xpath).remove
