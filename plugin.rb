@@ -27,7 +27,8 @@ after_initialize do
 
       doc.css('div.graphviz').each do |graph|
         engine = graph.attribute('data-engine').value
-        svg_graph = context.eval("Viz(#{graph.children[0].content.inspect}, {engine: '#{engine}'})")
+        svg_graph = context.eval("Viz(#{graph.children[0].content.inspect}, {engine: '#{engine}'})") rescue nil
+        next if svg_graph.nil?
 
         should_use_svg = SiteSetting.graphviz_default_svg
         should_use_svg ||= graph.classes.include?("graphviz-svg")
