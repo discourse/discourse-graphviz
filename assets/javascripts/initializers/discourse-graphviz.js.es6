@@ -35,10 +35,10 @@ export default {
         .then(svgChart => {
           $container.html(svgChart);
         })
-        .catch(() => {
-          // graphviz error are unhelpful so we just show a default error
+        .catch(e => {
+          // graphviz errors are very helpful so we just show them as is
           const $error = $(
-            "<div class='graph-error'>Error while rendering graph.</div>"
+            "<div class='graph-error'>" + e.message + "</div>"
           );
           $container.html($error);
         });
