@@ -1,6 +1,6 @@
 ## discourse-graphviz
 
-Adds the [Viz.js](https://github.com/mdaines/viz.js) library to discourse.
+Adds [Graphviz](https://www.graphviz.org) capability to discourse.
 
 Topic discussing the plugin itself can be found here: https://meta.discourse.org/t/graphviz-plugin/97554
 
