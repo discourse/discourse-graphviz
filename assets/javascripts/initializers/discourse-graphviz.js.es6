@@ -18,7 +18,7 @@ export default {
   },
 
   renderGraph($container) {
-    const graphDefinition = $container.text();
+    const graphDefinition = $container.text().trim();
     const engine = $container.attr("data-engine");
 
     const $spinner = $("<div class='spinner tiny'></div>");

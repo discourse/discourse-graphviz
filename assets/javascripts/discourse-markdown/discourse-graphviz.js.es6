@@ -22,11 +22,8 @@ export function setup(helper) {
           const engines = ["dot", "neato", "circo", "fdp", "osage", "twopi"];
           const token = state.push("html_raw", "", 0);
 
-          // remove comments
-          content = content.replace(/^\s*?\/\/.*$/m, "");
-
           const escaped = state.md.utils.escapeHtml(
-            content.replace(/[\r\n\t]/g, "")
+            content
           );
           const inputEngine = state.md.utils.escapeHtml(tagInfo.attrs.engine);
           const engine = engines.includes(inputEngine)
