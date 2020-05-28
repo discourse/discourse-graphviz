@@ -33,10 +33,10 @@ export default {
       let hpccWasm = self["@hpcc-js/wasm"];
       hpccWasm.graphviz
         .layout(graphDefinition, "svg", engine)
-        .then(svgChart => {
+        .then((svgChart) => {
           $container.html(svgChart);
         })
-        .catch(e => {
+        .catch((e) => {
           // graphviz errors are very helpful so we just show them as is
           const $error = $(
             "<div class='graph-error'>" + escape(e.message) + "</div>"
@@ -47,7 +47,7 @@ export default {
   },
 
   initialize() {
-    withPluginApi("0.8.22", api => {
+    withPluginApi("0.8.22", (api) => {
       api.decorateCooked(
         ($elem) => {
           if (!Discourse.SiteSettings.discourse_graphviz_enabled) {
@@ -62,5 +62,5 @@ export default {
         { id: "graphviz" }
       );
     });
-  }
+  },
 };
