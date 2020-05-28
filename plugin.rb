@@ -14,7 +14,7 @@ after_initialize do
 
   def context
     context = MiniRacer::Context.new
-    context.load("#{Rails.root}/plugins/discourse-graphviz/public/javascripts/viz-1.8.2.js")
+    context.load("#{Rails.root}/plugins/discourse-graphviz/public/javascripts/@hpcc-js/wasm@0.3.14/dist/index.min.js")
     context
   end
 

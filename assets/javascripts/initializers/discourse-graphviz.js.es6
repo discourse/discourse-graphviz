@@ -24,24 +24,20 @@ export default {
     const $spinner = $("<div class='spinner tiny'></div>");
     $container.html($spinner);
 
-    loadScript("/plugins/discourse-graphviz/javascripts/viz-1.8.2.js").then(
+    loadScript("/plugins/discourse-graphviz/javascripts/@hpcc-js/wasm@0.3.14/dist/index.min.js").then(
       () => {
         $container.removeClass("is-loading");
 
-        try {
-          /* global Viz */
-          const svgChart = Viz(graphDefinition, {
-            format: "svg",
-            engine
-          });
+        let hpccWasm = self["@hpcc-js/wasm"];
+        hpccWasm.graphviz.layout(graphDefinition, "svg", engine).then((svgChart) => {
           $container.html(svgChart);
-        } catch (e) {
+        }).catch(e => {
           // graphviz error are unhelpful so we just show a default error
           const $error = $(
             "<div class='graph-error'>Error while rendering graph.</div>"
           );
           $container.html($error);
-        }
+        });
       }
     );
   },
