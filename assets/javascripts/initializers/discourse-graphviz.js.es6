@@ -49,7 +49,7 @@ export default {
   initialize() {
     withPluginApi("0.8.22", api => {
       api.decorateCooked(
-        ($elem, helper) => {
+        ($elem, _helper) => {
           if (!Discourse.SiteSettings.discourse_graphviz_enabled) {
             return;
           }
