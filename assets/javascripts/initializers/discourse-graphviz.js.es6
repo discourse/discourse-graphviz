@@ -1,5 +1,6 @@
 import loadScript from "discourse/lib/load-script";
 import { withPluginApi } from "discourse/lib/plugin-api";
+import { escape } from "pretty-text/sanitizer";
 const { run } = Ember;
 
 export default {
@@ -38,7 +39,7 @@ export default {
         .catch(e => {
           // graphviz errors are very helpful so we just show them as is
           const $error = $(
-            "<div class='graph-error'>" + e.message + "</div>"
+            "<div class='graph-error'>" + escape(e.message) + "</div>"
           );
           $container.html($error);
         });
@@ -48,7 +49,7 @@ export default {
   initialize() {
     withPluginApi("0.8.22", api => {
       api.decorateCooked(
-        $elem => {
+        ($elem, helper) => {
           if (!Discourse.SiteSettings.discourse_graphviz_enabled) {
             return;
           }
