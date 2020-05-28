@@ -22,9 +22,7 @@ export function setup(helper) {
           const engines = ["dot", "neato", "circo", "fdp", "osage", "twopi"];
           const token = state.push("html_raw", "", 0);
 
-          const escaped = state.md.utils.escapeHtml(
-            content
-          );
+          const escaped = state.md.utils.escapeHtml(content);
           const inputEngine = state.md.utils.escapeHtml(tagInfo.attrs.engine);
           const engine = engines.includes(inputEngine)
             ? `data-engine='${inputEngine}'`
