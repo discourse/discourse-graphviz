@@ -2,7 +2,7 @@
 
 # name: discourse-graphviz
 # about: Graphviz
-# version: 0.0.1
+# version: 1.0.0
 # authors: Maja Komel, Joffrey Jaffeux, Magnus Jacobsson
 # url: https://github.com/discourse/discourse-graphviz
 
