@@ -3,7 +3,7 @@
 # name: discourse-graphviz
 # about: Graphviz
 # version: 0.0.1
-# authors: Maja Komel, Joffrey Jaffeux
+# authors: Maja Komel, Joffrey Jaffeux, Magnus Jacobsson
 # url: https://github.com/discourse/discourse-graphviz
 
 enabled_site_setting :discourse_graphviz_enabled
