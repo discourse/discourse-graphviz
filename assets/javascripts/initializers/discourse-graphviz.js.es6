@@ -1,4 +1,3 @@
-import loadScript from "discourse/lib/load-script";
 import { withPluginApi } from "discourse/lib/plugin-api";
 import { escape } from "pretty-text/sanitizer";
 import { getURLWithCDN } from "discourse-common/lib/get-url";
