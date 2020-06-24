@@ -28,9 +28,7 @@ export default {
     $container.html($spinner);
 
     if (worker === undefined) {
-      worker = new Worker(
-        getURLWithCDN("/plugins/discourse-graphviz/javascripts/worker.js")
-      );
+      worker = new Worker("/plugins/discourse-graphviz/javascripts/worker.js");
 
       worker.postMessage({
         scriptURL: getURLWithCDN(
