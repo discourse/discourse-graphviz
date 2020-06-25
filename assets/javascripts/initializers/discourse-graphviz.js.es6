@@ -26,32 +26,26 @@ export default {
     const $spinner = $("<div class='spinner tiny'></div>");
     $container.html($spinner);
 
-    if (worker === undefined) {
-      worker = new Worker("/plugins/discourse-graphviz/javascripts/worker.js");
+    loadScript("/plugins/discourse-graphviz/javascripts/viz-1.8.2.js").then(
+      () => {
+        $container.removeClass("is-loading");
 
-      worker.postMessage({
-        scriptURL: getURLWithCDN(
-          "/plugins/discourse-graphviz/javascripts/@hpcc-js/wasm@0.3.14/dist/index.min.js"
-        )
-      });
-    }
-
-    worker.addEventListener("message", event => {
-      const data = event.data;
-      $container.removeClass("is-loading");
-
-      if (data.svgChart) {
-        $container.html(data.svgChart);
-      } else {
-        // graphviz errors are very helpful so we just show them as is
-        const $error = $(
-          "<div class='graph-error'>" + escape(data.errorMessage) + "</div>"
-        );
-        $container.html($error);
+        try {
+          /* global Viz */
+          const svgChart = Viz(graphDefinition, {
+            format: "svg",
+            engine
+          });
+          $container.html(svgChart);
+        } catch (e) {
+          // graphviz error are unhelpful so we just show a default error
+          const $error = $(
+            "<div class='graph-error'>Error while rendering graph.</div>"
+          );
+          $container.html($error);
+        }
       }
-    });
-
-    worker.postMessage({ graphDefinition, engine });
+    );
   },
 
   initialize(container) {
