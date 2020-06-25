@@ -1,8 +1,6 @@
 import { withPluginApi } from "discourse/lib/plugin-api";
-import { escape } from "pretty-text/sanitizer";
-import { getURLWithCDN } from "discourse-common/lib/get-url";
+import loadScript from "discourse/lib/load-script";
 const { run } = Ember;
-let worker = undefined;
 
 export default {
   name: "discourse-graphviz",
