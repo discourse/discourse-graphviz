@@ -35,7 +35,7 @@ after_initialize do
         should_use_svg &&= !graph.classes.include?("graphviz-no-svg")
 
         if should_use_svg
-          new_graph_node = Nokogiri::HTML5.fragment(svg_graph).css("svg").first
+          new_graph_node = Nokogiri::HTML.fragment(svg_graph).css("svg").first
           new_graph_node['class'] = "graphviz-svg-render"
           new_graph_node.xpath(svg_whitelist_xpath).remove
           graph.replace new_graph_node
