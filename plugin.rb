@@ -14,7 +14,7 @@ after_initialize do
 
   def context
     context = MiniRacer::Context.new
-    context.load("#{Rails.root}/plugins/discourse-graphviz/public/javascripts/viz-1.8.2.js")
+    context.load("#{Rails.root}/plugins/discourse-graphviz/public/javascripts/viz-3.0.1.js")
     context
   end
 
@@ -27,7 +27,7 @@ after_initialize do
 
       doc.css('div.graphviz').each do |graph|
         engine = graph.attribute('data-engine').value
-        svg_graph = context.eval("Viz(#{graph.children[0].content.inspect}, {engine: '#{engine}'})") rescue nil
+        svg_graph = context.eval("vizRenderStringSync(#{graph.children[0].content.inspect}, {engine: '#{engine}'})") rescue nil
         next if svg_graph.nil?
 
         should_use_svg = SiteSetting.graphviz_default_svg
