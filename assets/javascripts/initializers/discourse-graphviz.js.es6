@@ -36,9 +36,9 @@ export default {
           });
           $container.html(svgChart);
         } catch (e) {
-          // graphviz error are unhelpful so we just show a default error
+          // graphviz errors are very helpful so we just show them as is
           const $error = $(
-            "<div class='graph-error'>Error while rendering graph.</div>"
+            "<div class='graph-error'>" + e.message + "</div>"
           );
           $container.html($error);
         }
