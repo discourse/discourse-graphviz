@@ -1,5 +1,6 @@
 import { withPluginApi } from "discourse/lib/plugin-api";
 import loadScript from "discourse/lib/load-script";
+import { escape } from "pretty-text/sanitizer";
 const { run } = Ember;
 
 export default {
@@ -36,9 +37,8 @@ export default {
           });
           $container.html(svgChart);
         } catch (e) {
-          // graphviz error are unhelpful so we just show a default error
           const $error = $(
-            "<div class='graph-error'>Error while rendering graph.</div>"
+            `<div class='graph-error'>${escape(e.message)}</div>`
           );
           $container.html($error);
         }
