@@ -33,7 +33,7 @@ export default {
           /* global vizRenderStringSync */
           const svgChart = vizRenderStringSync(graphDefinition, {
             format: "svg",
-            engine
+            engine,
           });
           $container.html(svgChart);
         } catch (e) {
@@ -50,9 +50,9 @@ export default {
     const siteSettings = container.lookup("site-settings:main");
 
     if (siteSettings.discourse_graphviz_enabled) {
-      withPluginApi("0.8.22", api => {
+      withPluginApi("0.8.22", (api) => {
         api.decorateCooked(
-          $elem => {
+          ($elem) => {
             const $graphviz = $elem.find(".graphviz");
             if ($graphviz.length) {
               run.debounce(this, this.renderGraphs, $graphviz, 200);
@@ -62,5 +62,5 @@ export default {
         );
       });
     }
-  }
+  },
 };
