@@ -6,14 +6,14 @@ export function setup(helper) {
   helper.whiteList([
     "div.graphviz",
     "div.graphviz.is-loading",
-    "div.graphviz-svg"
+    "div.graphviz-svg",
   ]);
 
   helper.registerOptions((opts, siteSettings) => {
     opts.features.graphviz = siteSettings.discourse_graphviz_enabled;
   });
 
-  helper.registerPlugin(md => {
+  helper.registerPlugin((md) => {
     if (md.options.discourse.features.graphviz) {
       md.block.bbcode.ruler.push("graphviz", {
         tag: "graphviz",
@@ -38,7 +38,7 @@ export function setup(helper) {
           token.content = `<div class="graphviz is-loading${svgOnly}" ${engine}>\n${escaped}\n</div>\n`;
 
           return true;
-        }
+        },
       });
     }
   });
