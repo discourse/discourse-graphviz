@@ -18,8 +18,13 @@ after_initialize do
     context
   end
 
-  def svg_whitelist_xpath
-    @@svg_whitelist_xpath ||= "//*[#{UploadCreator::WHITELISTED_SVG_ELEMENTS.map { |e| "name()!='#{e}'" }.join(" and ") }]"
+  def allowed_svg_xpath
+    # TODO Drop after Discourse 2.6.0 release
+    if UploadCreator.const_defined?("WHITELISTED_SVG_ELEMENTS")
+      @@allowed_svg_xpath ||= "//*[#{UploadCreator::WHITELISTED_SVG_ELEMENTS.map { |e| "name()!='#{e}'" }.join(" and ") }]"
+    else
+      @@allowed_svg_xpath ||= "//*[#{UploadCreator::ALLOWED_SVG_ELEMENTS.map { |e| "name()!='#{e}'" }.join(" and ") }]"
+    end
   end
 
   DiscourseEvent.on(:before_post_process_cooked) do |doc, post|
@@ -40,7 +45,7 @@ after_initialize do
           new_graph_node = Nokogiri::HTML.fragment(svg_graph).css("svg").first
           # rubocop:enable Discourse/NoNokogiriHtmlFragment
           new_graph_node['class'] = "graphviz-svg-render"
-          new_graph_node.xpath(svg_whitelist_xpath).remove
+          new_graph_node.xpath(allowed_svg_xpath).remove
           graph.replace new_graph_node
           next
         end
