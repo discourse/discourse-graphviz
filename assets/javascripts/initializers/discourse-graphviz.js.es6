@@ -1,7 +1,8 @@
 import { withPluginApi } from "discourse/lib/plugin-api";
 import loadScript from "discourse/lib/load-script";
 import { escape } from "pretty-text/sanitizer";
-const { run } = Ember;
+import { debounce } from "@ember/runloop";
+import discourseDebounce from "discourse-common/lib/debounce";
 
 export default {
   name: "discourse-graphviz",
@@ -55,7 +56,10 @@ export default {
           ($elem) => {
             const $graphviz = $elem.find(".graphviz");
             if ($graphviz.length) {
-              run.debounce(this, this.renderGraphs, $graphviz, 200);
+              // TODO: Use discouseDebounce when discourse 2.7 gets released.
+              const debounceFunc = discourseDebounce || debounce;
+
+              debounceFunc(this, this.renderGraphs, $graphviz, 200);
             }
           },
           { id: "graphviz" }
