@@ -1,5 +1,7 @@
 ## discourse-graphviz
 
+https://meta.discourse.org/t/graphviz-plugin/97554/
+
 Adds [Graphviz](https://www.graphviz.org) capability to discourse.
 
 Topic discussing the plugin itself can be found here: https://meta.discourse.org/t/graphviz-plugin/97554
