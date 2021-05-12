@@ -4,14 +4,14 @@ div.graphviz {
   }
   &.is-loading {
     padding: 2em;
-    background: var(--primary-very-low, $primary-very-low);
+    background: var(--primary-very-low);
   }
 
   .graph-error {
     padding: 2em;
-    background-color: var(--danger-low, $danger-low);
+    background-color: var(--danger-low);
     margin: 0;
-    color: var(--danger, $danger);
+    color: var(--danger);
     text-align: center;
   }
 }
