@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 # name: discourse-graphviz
-# about: Graphviz
+# about: Adds Graphviz capability to Discourse.
 # version: 0.0.1
 # authors: Maja Komel, Joffrey Jaffeux
 # url: https://github.com/discourse/discourse-graphviz
