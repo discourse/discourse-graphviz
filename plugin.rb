@@ -19,12 +19,7 @@ after_initialize do
   end
 
   def allowed_svg_xpath
-    # TODO Drop after Discourse 2.6.0 release
-    if UploadCreator.const_defined?("WHITELISTED_SVG_ELEMENTS")
-      @@allowed_svg_xpath ||= "//*[#{UploadCreator::WHITELISTED_SVG_ELEMENTS.map { |e| "name()!='#{e}'" }.join(" and ") }]"
-    else
-      @@allowed_svg_xpath ||= "//*[#{UploadCreator::ALLOWED_SVG_ELEMENTS.map { |e| "name()!='#{e}'" }.join(" and ") }]"
-    end
+    @@allowed_svg_xpath ||= "//*[#{UploadCreator::ALLOWED_SVG_ELEMENTS.map { |e| "name()!='#{e}'" }.join(" and ") }]"
   end
 
   DiscourseEvent.on(:before_post_process_cooked) do |doc, post|
