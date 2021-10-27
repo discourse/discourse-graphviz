@@ -3,7 +3,7 @@ export function setup(helper) {
     return;
   }
 
-  helper.whiteList([
+  helper.allowList([
     "div.graphviz",
     "div.graphviz.is-loading",
     "div.graphviz-svg",
