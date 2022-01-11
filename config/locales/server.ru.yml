@@ -5,3 +5,6 @@
 # https://translate.discourse.org/
 
 ru:
+  site_settings:
+    discourse_graphviz_enabled: "Включить плагин Graphviz"
+    graphviz_default_svg: "По умолчанию используется SVG-рендеринг вместо рендеринга изображений, может быть настроен для каждого графа с помощью элемента «svg=true|false»."
