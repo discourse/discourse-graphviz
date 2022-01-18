@@ -5,3 +5,6 @@
 # https://translate.discourse.org/
 
 es:
+  site_settings:
+    discourse_graphviz_enabled: "Habilitar el complemento Graphviz"
+    graphviz_default_svg: "Por defecto se renderiza el SVG en lugar de la imagen, se puede personalizar por gráfico con el elemento «svg=true|false»."
