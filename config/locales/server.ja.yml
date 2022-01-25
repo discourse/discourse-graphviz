@@ -5,3 +5,6 @@
 # https://translate.discourse.org/
 
 ja:
+  site_settings:
+    discourse_graphviz_enabled: "Graphviz プラグインを有効にする"
+    graphviz_default_svg: "デフォルトは、画像レンダリングではなく SVG レンダリングです。`svg=true|false` 要素を使用して、グラフごとにカスタマイズできます。"
