@@ -5,6 +5,7 @@
 # version: 0.0.1
 # authors: Maja Komel, Joffrey Jaffeux
 # url: https://github.com/discourse/discourse-graphviz
+# transpile_js: true
 
 enabled_site_setting :discourse_graphviz_enabled
 
@@ -58,7 +59,7 @@ after_initialize do
 
         upload = UploadCreator.new(tmp_png, filename).create_for(-1)
 
-        # replace div.gaphviz with image node
+        # replace div.graphviz with image node
         new_graph_node = Nokogiri::XML::Node.new("img", doc)
         new_graph_node['src'] = upload.url
         new_graph_node['alt'] = filename
