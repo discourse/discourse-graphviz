@@ -52,7 +52,7 @@ after_initialize do
         tmp_svg.write(svg_graph)
         tmp_svg.rewind
 
-        graph_title = Nokogiri.parse(svg_graph).at("//comment()[contains(.,'Title')]").content.match(/Title:\s(?<title>.+)\sPages:/)[:title]
+        graph_title = Nokogiri.parse(svg_graph).at("//comment()[contains(.,'Title')]")&.content&.match(/Title:\s(?<title>.+)\sPages:/)&.[](:title)
         filename = graph_title != "%0" ? graph_title : File.basename(tmp_png.path)
 
         Discourse::Utils.execute_command('convert', '-density', '300', tmp_svg.path, tmp_png.path)
