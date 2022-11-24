@@ -63,6 +63,8 @@ after_initialize do
         new_graph_node = Nokogiri::XML::Node.new("img", doc)
         new_graph_node['src'] = upload.url
         new_graph_node['alt'] = filename
+        new_graph_node['width'] = upload.width
+        new_graph_node['height'] = upload.height
         graph.replace new_graph_node
 
         tmp_svg.close!
