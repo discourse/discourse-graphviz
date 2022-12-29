@@ -9,7 +9,7 @@ end
 
 link = "https://github.com/aduh95/viz.js/releases/download/v#{version}/viz.js.tar.gz"
 
-require 'tmpdir'
+require "tmpdir"
 
 dest = File.expand_path(File.dirname(__FILE__), "public/javascripts/viz-#{version}.js")
 
