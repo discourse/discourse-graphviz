@@ -5,3 +5,6 @@
 # https://translate.discourse.org/
 
 tr_TR:
+  site_settings:
+    discourse_graphviz_enabled: "Graphviz eklentisini etkinleştirin"
+    graphviz_default_svg: "Görüntü oluşturma yerine SVG oluşturmayı varsayılan yapın, \"svg=true|false\" ögesi ile grafik başına özelleştirilebilir."
