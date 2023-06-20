@@ -5,3 +5,6 @@
 # https://translate.discourse.org/
 
 pl_PL:
+  site_settings:
+    discourse_graphviz_enabled: "Włącz wtyczkę Graphviz"
+    graphviz_default_svg: "Domyślnie renderowanie SVG zamiast renderowania obrazu, można dostosować dla każdego wykresu za pomocą elementu `svg=true|false`."
