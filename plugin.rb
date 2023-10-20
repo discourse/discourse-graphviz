@@ -1,7 +1,8 @@
 # frozen_string_literal: true
 
 # name: discourse-graphviz
-# about: Adds Graphviz capability to Discourse.
+# about: Provides the ability to add graphs to posts using the DOT language.
+# meta_topic_id: 97554
 # version: 0.0.1
 # authors: Maja Komel, Joffrey Jaffeux
 # url: https://github.com/discourse/discourse-graphviz
