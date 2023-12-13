@@ -1,7 +1,8 @@
-import { withPluginApi } from "discourse/lib/plugin-api";
-import loadScript from "discourse/lib/load-script";
-import { escape } from "pretty-text/sanitizer";
 import { debounce } from "@ember/runloop";
+import $ from "jquery";
+import { escape } from "pretty-text/sanitizer";
+import loadScript from "discourse/lib/load-script";
+import { withPluginApi } from "discourse/lib/plugin-api";
 
 export default {
   name: "discourse-graphviz",
