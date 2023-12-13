@@ -6,7 +6,6 @@
 # version: 0.0.1
 # authors: Maja Komel, Joffrey Jaffeux
 # url: https://github.com/discourse/discourse-graphviz
-# transpile_js: true
 
 enabled_site_setting :discourse_graphviz_enabled
 
