@@ -1,8 +1,8 @@
-import { debounce } from "@ember/runloop";
 import $ from "jquery";
 import { escape } from "pretty-text/sanitizer";
 import loadScript from "discourse/lib/load-script";
 import { withPluginApi } from "discourse/lib/plugin-api";
+import discourseDebounce from "discourse-common/lib/debounce";
 
 export default {
   name: "discourse-graphviz",
@@ -48,22 +48,15 @@ export default {
   },
 
   initialize(container) {
-    const siteSettings = container.lookup("site-settings:main");
+    const siteSettings = container.lookup("service:site-settings");
 
     if (siteSettings.discourse_graphviz_enabled) {
-      // TODO: Use discouseDebounce when discourse 2.7 gets released.
-      let debounceFunction = debounce;
-
-      try {
-        debounceFunction = require("discourse-common/lib/debounce").default;
-      } catch (_) {}
-
       withPluginApi("0.8.22", (api) => {
         api.decorateCooked(
           ($elem) => {
             const $graphviz = $elem.find(".graphviz");
             if ($graphviz.length) {
-              debounceFunction(this, this.renderGraphs, $graphviz, 200);
+              discourseDebounce(this, this.renderGraphs, $graphviz, 200);
             }
           },
           { id: "graphviz" }
