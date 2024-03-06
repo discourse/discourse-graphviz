@@ -1,2 +1,6 @@
 inherit_gem:
   rubocop-discourse: stree-compat.yml
+
+Discourse/Plugins/NamespaceMethods:
+  Exclude:
+    - upgrade-viz-js.rb
