@@ -12,18 +12,22 @@ enabled_site_setting :discourse_graphviz_enabled
 register_asset "stylesheets/common/graphviz.scss"
 
 after_initialize do
-  def context
-    context = MiniRacer::Context.new
-    context.load("#{Rails.root}/plugins/discourse-graphviz/public/javascripts/viz-3.0.1.js")
-    context
+  module DiscourseGraphviz
+    class << self
+      def context
+        context = MiniRacer::Context.new
+        context.load("#{Rails.root}/plugins/discourse-graphviz/public/javascripts/viz-3.0.1.js")
+        context
+      end
+
+      def allowed_svg_xpath
+        @@allowed_svg_xpath ||=
+          "//*[#{UploadCreator::ALLOWED_SVG_ELEMENTS.map { |e| "name()!='#{e}'" }.join(" and ")}]"
+      end
+    end
   end
 
-  def allowed_svg_xpath
-    @@allowed_svg_xpath ||=
-      "//*[#{UploadCreator::ALLOWED_SVG_ELEMENTS.map { |e| "name()!='#{e}'" }.join(" and ")}]"
-  end
-
-  DiscourseEvent.on(:before_post_process_cooked) do |doc, post|
+  on(:before_post_process_cooked) do |doc, post|
     if SiteSetting.discourse_graphviz_enabled
       doc
         .css("div.graphviz")
@@ -31,7 +35,7 @@ after_initialize do
           engine = graph.attribute("data-engine").value
           svg_graph =
             begin
-              context.eval(
+              DiscourseGraphviz.context.eval(
                 "vizRenderStringSync(#{graph.children[0].content.inspect}, {engine: '#{engine}'})",
               )
             rescue StandardError
@@ -49,7 +53,7 @@ after_initialize do
             new_graph_node = Nokogiri::HTML.fragment(svg_graph).css("svg").first
             # rubocop:enable Discourse/NoNokogiriHtmlFragment
             new_graph_node["class"] = "graphviz-svg-render"
-            new_graph_node.xpath(allowed_svg_xpath).remove
+            new_graph_node.xpath(DiscourseGraphviz.allowed_svg_xpath).remove
             graph.replace new_graph_node
             next
           end
