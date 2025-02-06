@@ -1,8 +1,8 @@
 import $ from "jquery";
 import { escape } from "pretty-text/sanitizer";
+import discourseDebounce from "discourse/lib/debounce";
 import loadScript from "discourse/lib/load-script";
 import { withPluginApi } from "discourse/lib/plugin-api";
-import discourseDebounce from "discourse-common/lib/debounce";
 
 export default {
   name: "discourse-graphviz",
