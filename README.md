@@ -1,5 +1,8 @@
 ## discourse-graphviz
 
+> [!IMPORTANT]
+> This plugin has now been bundled into Discourse core. See: https://meta.discourse.org/t/bundling-more-popular-plugins-with-discourse-core/373574
+
 https://meta.discourse.org/t/graphviz-plugin/97554/
 
 Adds [Graphviz](https://www.graphviz.org) capability to discourse.
